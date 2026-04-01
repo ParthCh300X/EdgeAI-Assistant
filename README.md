@@ -1,5 +1,20 @@
 # 🚀 Edge AI Assistant
 
+<p align="center">
+  <img src="YOUR_LOGO_LINK_HERE" width="120"/>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Platform-Android-green?style=for-the-badge"/>
+  <img src="https://img.shields.io/badge/Kotlin-1.9-blue?style=for-the-badge"/>
+  <img src="https://img.shields.io/badge/Jetpack-Compose-orange?style=for-the-badge"/>
+  <img src="https://img.shields.io/badge/Architecture-MVVM-purple?style=for-the-badge"/>
+  <img src="https://img.shields.io/badge/ML-TensorFlowLite-yellow?style=for-the-badge"/>
+  <img src="https://img.shields.io/badge/Mode-Offline-critical?style=for-the-badge"/>
+</p>
+
+---
+
 An offline, hybrid AI-powered assistant built for low-latency task automation on Android devices.  
 Combines deterministic rule-based parsing with on-device machine learning for robust intent understanding.
 
@@ -11,7 +26,6 @@ Combines deterministic rule-based parsing with on-device machine learning for ro
 > Probabilistic where language gets messy.  
 > Everything runs **on-device**.
 
----
 ---
 
 ## 🔑 Key Features
@@ -49,25 +63,25 @@ Combines deterministic rule-based parsing with on-device machine learning for ro
 - **Optimization:** Quantized (low latency)
 
 ### Role of ML:
-- Activated only when rule confidence is low
-- Handles ambiguous or unstructured inputs
+- Activated only when rule confidence is low  
+- Handles ambiguous or unstructured inputs  
 
 ---
 
 ## 🧠 Context Engine
 
-- Maintains short-term conversational memory
-- Enables multi-step flows
+- Maintains short-term conversational memory  
+- Enables multi-step flows  
 
 ---
 
 ## 📊 Analytics Engine
 
 Tracks:
-- Total commands executed
-- Intent distribution
-- Execution latency (ms)
-- Success / failure rate
+- Total commands executed  
+- Intent distribution  
+- Execution latency (ms)  
+- Success / failure rate  
 
 Stored locally using RoomDB.
 
@@ -75,10 +89,10 @@ Stored locally using RoomDB.
 
 ## 🎯 Personalization Engine
 
-- Tracks frequently used intents
+- Tracks frequently used intents  
 - Generates smart suggestions based on:
-  - Recency
-  - Frequency
+  - Recency  
+  - Frequency  
 
 ---
 
@@ -86,11 +100,12 @@ Stored locally using RoomDB.
 
 - Built with **Jetpack Compose**
 - Conversational chat interface
-- Features:
-  - Message bubbles (user vs AI)
-  - Typing animation
-  - Smooth auto-scroll
-  - Voice interaction UI
+
+Features:
+- Message bubbles (user vs AI)  
+- Typing animation  
+- Smooth auto-scroll  
+- Voice interaction UI  
 
 ---
 
@@ -98,15 +113,16 @@ Stored locally using RoomDB.
 
 - **Language:** Kotlin  
 - **UI:** Jetpack Compose  
-- **Architecture:** MVVM + Clean modular layers  
+- **Architecture:** MVVM + Clean Architecture  
 - **Database:** RoomDB  
 - **ML:** TensorFlow Lite  
 - **Concurrency:** Kotlin Coroutines  
 - **Dependency Injection:** Hilt  
-- **System APIs:**
-  - AlarmManager
-  - PackageManager
-  - SpeechRecognizer
+
+**System APIs:**
+- AlarmManager  
+- PackageManager  
+- SpeechRecognizer  
 
 ---
 
@@ -121,21 +137,21 @@ Stored locally using RoomDB.
 
 ## 🧩 What Makes This Stand Out
 
-- Hybrid AI (Rules + ML)
-- Context-aware execution
-- Fully offline system
-- Modular and extensible architecture
-- Real-world Android system integrations
+- Hybrid AI (Rules + ML)  
+- Context-aware execution  
+- Fully offline system  
+- Modular and extensible architecture  
+- Deep Android system integration  
 
 ---
 
 ## 🚀 Future Improvements (V2)
 
-- Advanced calculator (trigonometry, power functions)
-- Alarm UI (snooze, dismiss gestures)
-- Notes management UI (edit, delete, tagging)
-- Enhanced NLP + entity extraction
-- Expanded unit conversion system
+- Advanced calculator (trigonometry, power functions)  
+- Alarm UI (snooze, dismiss gestures)  
+- Notes management UI (edit, delete, tagging)  
+- Enhanced NLP + entity extraction  
+- Expanded unit conversion system  
 
 ---
 

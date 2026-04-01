@@ -1,8 +1,6 @@
 # 🚀 Edge AI Assistant
 
-<p align="center">
-  <img src="https://raw.githubusercontent.com/ParthCh300X/EdgeAI-Assistant/refs/heads/main/app/src/main/res/drawable/edgeicon_background.xml" width="120"/>
-</p>
+
 
 <p align="center">
   <img src="https://img.shields.io/badge/Platform-Android-green?style=for-the-badge"/>

@@ -168,6 +168,8 @@ the implementation details of the layer above it.
 ---
 
 ## 🗂️ Repository Structure
+
+```
 EdgeAIAssistant/
 ├── app/src/main/
 │   ├── ui/              # Compose screens + components
@@ -182,6 +184,7 @@ EdgeAIAssistant/
 │   └── di/              # Hilt modules
 └── assets/
 └── intent_model.tflite
+```
 
 ---
 

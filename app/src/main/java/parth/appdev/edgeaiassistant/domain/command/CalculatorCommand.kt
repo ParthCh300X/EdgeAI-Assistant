@@ -6,7 +6,7 @@ class CalculatorCommand(
     private val input: String
 ) : Command {
 
-    override fun execute(): String {
+    override suspend fun execute(): String {
         return try {
             val normalized = normalizeExpression(input)
 

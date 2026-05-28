@@ -6,21 +6,23 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import parth.appdev.edgeaiassistant.features.alarm.AlarmReceiver
-import java.util.*
+import java.util.Calendar
 
 class SetAlarmCommand(
-    private val context: Context,
-    private val input: String
+    private val context : Context,
+    private val input   : String
 ) : Command {
 
-    override fun execute(): String {
+    override suspend fun execute(): String {
 
-        val parsed = parseAlarm(input) ?: return "Couldn't understand time"
+        val parsed = parseAlarm(input)
+            ?: return "Couldn't understand the time. Try: \"set alarm for 7am\" or \"wake me at 8:30pm\""
 
         val (timeMillis, message) = parsed
 
-        val intent = Intent(context, AlarmReceiver::class.java)
-        intent.putExtra("message", message)
+        val intent = Intent(context, AlarmReceiver::class.java).apply {
+            putExtra("message", message)
+        }
 
         val pendingIntent = PendingIntent.getBroadcast(
             context,
@@ -32,10 +34,9 @@ class SetAlarmCommand(
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
         return try {
-
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                 if (!alarmManager.canScheduleExactAlarms()) {
-                    return "Allow exact alarms in settings"
+                    return "Please enable exact alarms in Settings > Special app access."
                 }
             }
 
@@ -45,64 +46,43 @@ class SetAlarmCommand(
                 pendingIntent
             )
 
-            "Alarm set"
+            // Format confirmation time for user
+            val cal  = Calendar.getInstance().apply { timeInMillis = timeMillis }
+            val hour = cal.get(Calendar.HOUR_OF_DAY)
+            val min  = cal.get(Calendar.MINUTE)
+            val ampm = if (hour < 12) "AM" else "PM"
+            val h12  = when {
+                hour == 0  -> 12
+                hour > 12  -> hour - 12
+                else       -> hour
+            }
+            val minStr = if (min == 0) "" else ":%02d".format(min)
+            "Alarm set for $h12$minStr $ampm ✓"
 
         } catch (e: SecurityException) {
-            "Permission required for alarm"
+            "Permission required to set alarm."
         }
     }
 
-    // 🔥 FINAL ROBUST PARSER
     private fun parseAlarm(input: String): Pair<Long, String>? {
+        val text  = input.lowercase()
+        val parser = parth.appdev.edgeaiassistant.engine.slots.TimeParser()
+        val time  = parser.parseTime(text) ?: return null
 
-        val text = input.lowercase()
-
-        // 🔥 SUPPORT BOTH ":" AND "." FORMAT
-        val regex = Regex("(\\d{1,2})[:.](\\d{2})\\s*(am|pm)?|(\\d{1,2})\\s*(am|pm)")
-        val match = regex.find(text) ?: return null
-
-        var hour: Int
-        var minute: Int
-        var ampm: String?
-
-        if (match.groupValues[1].isNotEmpty()) {
-            // format: 1:50 or 1.50
-            hour = match.groupValues[1].toInt()
-            minute = match.groupValues[2].toInt()
-            ampm = match.groupValues[3]
-        } else {
-            // format: 5 pm
-            hour = match.groupValues[4].toInt()
-            minute = 0
-            ampm = match.groupValues[5]
-        }
-
-        // 🔥 AM/PM FIX
-        if (ampm == "pm" && hour < 12) hour += 12
-        if (ampm == "am" && hour == 12) hour = 0
-
-        val cal = Calendar.getInstance()
-        cal.set(Calendar.HOUR_OF_DAY, hour)
-        cal.set(Calendar.MINUTE, minute)
-        cal.set(Calendar.SECOND, 0)
-
-        // 🔥 FUTURE FIX (CRITICAL)
-        val now = System.currentTimeMillis()
-        if (cal.timeInMillis <= now) {
-            cal.add(Calendar.DAY_OF_YEAR, 1)
-        }
-
-        // 🔥 MESSAGE CLEANUP
         val message = text
-            .replace(match.value, "")
-            .replace("set alarm", "")
-            .replace("alarm for", "")
-            .replace("wake me", "")
-            .replace("remind me to", "")
-            .replace("at", "")
+            .replace(Regex("set\\s+alarm"), "")
+            .replace(Regex("alarm\\s+for"), "")
+            .replace(Regex("wake\\s+me(\\s+up)?"), "")
+            .replace(Regex("remind\\s+me(\\s+to)?"), "")
+            .replace(Regex("at\\s+\\d{1,2}[:.\\s]*(\\d{2})?\\s*(am|pm)?"), "")
+            .replace(Regex("\\d{1,2}[:.](\\d{2})\\s*(am|pm)?"), "")
+            .replace(Regex("\\d{1,2}\\s*(am|pm)"), "")
+            .replace("noon", "")
+            .replace("midnight", "")
             .trim()
             .ifBlank { "Alarm" }
+            .replaceFirstChar { it.uppercase() }
 
-        return Pair(cal.timeInMillis, message)
+        return Pair(time, message)
     }
 }

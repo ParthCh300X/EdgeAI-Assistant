@@ -1,36 +1,21 @@
 package parth.appdev.edgeaiassistant.analytics
 
-import android.content.Context
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import parth.appdev.edgeaiassistant.data.local.AppDatabase
-import parth.appdev.edgeaiassistant.data.local.entity.AnalyticsEntity
+import parth.appdev.edgeaiassistant.data.repository.AnalyticsRepository
 import parth.appdev.edgeaiassistant.domain.intent.IntentType
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class AnalyticsManager(
-    context: Context
+@Singleton
+class AnalyticsManager @Inject constructor(
+    private val repository: AnalyticsRepository
 ) {
-
-    private val dao = AppDatabase.getInstance(context).analyticsDao()
-
-    fun log(
+    // Caller must call from a coroutine scope (viewModelScope)
+    suspend fun log(
         intent: IntentType,
         input: String,
         success: Boolean,
         executionTime: Long
     ) {
-
-        CoroutineScope(Dispatchers.IO).launch {
-
-            dao.insert(
-                AnalyticsEntity(
-                    intentType = intent.name,
-                    inputText = input,
-                    success = success,
-                    executionTime = executionTime
-                )
-            )
-        }
+        repository.log(intent, input, success, executionTime)
     }
 }

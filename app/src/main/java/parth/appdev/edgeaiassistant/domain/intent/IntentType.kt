@@ -7,5 +7,7 @@ enum class IntentType {
     GET_NOTES,
     OPEN_APP,
     GENERAL,
-    SET_ALARM
+    SET_ALARM,
+    WEATHER,    // Task 13
+    TIMER       // Task 14
 }

@@ -13,7 +13,7 @@ class OpenAppCommand(
     private val repo = AppRepository(context)
     private val matcher = AppMatcher()
 
-    override fun execute(): String {
+    override suspend fun execute(): String {
 
         val apps = repo.getInstalledApps()
         val query = extractAppName(input)

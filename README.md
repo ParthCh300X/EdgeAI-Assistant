@@ -20,9 +20,9 @@
 
 ## 📸 Screenshots
 
-| Chat + Gemma AI | Analytics Dashboard | Settings |
-|---|---|---|
-| ![chat](assets/screen1.png) | ![analytics](assets/screen2.png) | ![settings](assets/screen3.png) |
+| Chat + Gemma AI | Notes | Analytics | Settings |
+|---|---|---|---|
+| ![chat](assets/screen1.png) | ![notes](assets/screen2.png) | ![analytics](assets/screen3.png) | ![settings](assets/screen4.png) |
 
 ---
 
